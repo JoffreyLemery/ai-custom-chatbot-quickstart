@@ -12,6 +12,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 openai.api_key = OPENAI_API_KEY
 
+
 def create_vector_db_tool(llm: ChatOpenAI):
     pinecone.init(
         api_key=os.getenv('PINECONE_API_KEY'),
@@ -29,9 +30,12 @@ def create_vector_db_tool(llm: ChatOpenAI):
     vectorstore = Pinecone(
         index, embedding_model.embed_query, text_field
     )
+
+
     return RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
         input_key="question",
-        retriever=vectorstore.as_retriever(search_kwargs={"k": 3})
+        retriever=vectorstore.as_retriever(search_kwargs={"k": 10})
     )
+

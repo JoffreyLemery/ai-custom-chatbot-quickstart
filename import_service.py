@@ -10,7 +10,7 @@ load_dotenv()
 
 
 def get_llm_predictor():
-    return LLMPredictor(llm=ChatOpenAI(temperature=0, max_tokens=512, model_name=CHAT_MODEL))
+    return LLMPredictor(llm=ChatOpenAI(temperature=0.5, max_tokens=4000, model_name=CHAT_MODEL))
 
 
 def get_service_context():

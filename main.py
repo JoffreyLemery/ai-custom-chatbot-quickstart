@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 import openai
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from import_service import import_web_scrape_data
@@ -14,7 +14,10 @@ from models.imported_urls import ImportedUrls
 from models.question import Question
 from query_service import QueryService
 
-load_dotenv()
+from fastapi.responses import JSONResponse
+
+
+
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 allowed_origins = [
@@ -45,7 +48,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/")
 async def root():
